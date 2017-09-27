@@ -14,7 +14,7 @@ FileHeader = textscan(fileID,'%s',7,'Delimiter','\n'); %Read Header
 
 %READ WHOLE FILE
 formatspec = [repmat('%f',1,10),repmat('%d',1,2)];
-DATA = textscan(fileID, formatspec ,'Delimiter',' ','MultipleDelimsAsOne',1);
+DATA = textscan(fileID, formatspec ,'Delimiter','\t','MultipleDelimsAsOne',1);
 fclose(fileID);
 %ExtractFileIDs
 p_id = num2cell(unique(DATA{11},'stable'));
