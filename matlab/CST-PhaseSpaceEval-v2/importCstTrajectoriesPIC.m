@@ -10,7 +10,7 @@ end
 fileID = fopen([filepath,filename],'r');
 
 %% Read File Header
-FileHeader = textscan(fileID,'%s',7,'Delimiter','\n'); %Read Header
+FileHeader = textscan(fileID,'%s',2,'Delimiter','\n'); %Read Header
 
 %READ WHOLE FILE
 formatspec = [repmat('%f',1,10),repmat('%d',1,2)];
