@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import time
 
-def split_cst_pic_style_output(targetfile, idfile='', reduce_particle_id=True):
+def cst_split_output_by_source(targetfile, idfile='', reduce_particle_id=True):
     print('targetfile = ' + targetfile)
     print('idfile = ' + idfile)
 
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    split_cst_pic_style_output(args.targetfile, args.idfile, args.redind)
+    cst_split_output_by_source(args.targetfile, args.idfile, args.redind)
     #split_cst_pic_style_output("args.targetfile", "args.idfile")
 
 
