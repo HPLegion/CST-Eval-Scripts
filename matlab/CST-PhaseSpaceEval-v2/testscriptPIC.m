@@ -1,9 +1,9 @@
 %% Set Up
-filepath = 'M:\evaltest\split\';
-filename = '12C_gauss_rx_3_ry_3_x_0_y_0.txt';
-des_filename = 'centraltrajectory_intf.txt';
+filepath = 'M:\ANALYSIS\v4s-emittance-offset-xy\';
+filename = 'test.txt';
+% des_filename = 'centraltrajectory_intf.txt';
 dtr_id = 0; %id of particle following design trajectory (dtr)
-SID =0;
+% SID =0;
 
 %% Import Data
 [p_id, p_sid, p_time, ps_data] =...
@@ -28,3 +28,35 @@ time_lim = findTimeRanges(p_time, dtr_ind);
 
 % clear p_time
 phaseSpacePlotter(time_lim, ps_splines, dtr_ind,filename)
+
+%% record emittances
+% nt = 30;
+% Tq=linspace(1,590,nt);
+% emit_x = zeros(nt,1);
+% emit_y = zeros(nt,1);
+% n_lost = zeros(nt,1);
+% zq = zeros(nt,1);
+% npxq = zeros(nt,1);
+% npyq = zeros(nt,1);
+% npzq = zeros(nt,1);
+% for k =1:length(Tq)
+%     disp(k)
+%     tic;
+%     [ts_coordinates, n_lost(k)] = evalPhaseSpace(Tq(k), time_lim, ps_splines, dtr_ind);
+%     [emit_x(k), emit_y(k)] = emittance(ts_coordinates);
+%     zq(k) = ppval(ps_splines.p_z_s{dtr_ind},Tq(k));
+%     npxq(k) = ppval(ps_splines.p_npx_s{dtr_ind},Tq(k));
+%     npyq(k) = ppval(ps_splines.p_npy_s{dtr_ind},Tq(k));
+%     npzq(k) = ppval(ps_splines.p_npz_s{dtr_ind},Tq(k));
+%     toc
+% end
+% 
+% %%
+% plain_m15.emit_x = emit_x;
+% plain_m15.emit_y = emit_y;
+% plain_m15.zq = zq;
+% plain_m15.n_lost = n_lost;
+% plain_m15.npxq = npxq;
+% plain_m15.npyq = npyq;
+% plain_m15.npzq = npzq;
+% msgbox('done')
