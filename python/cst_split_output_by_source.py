@@ -34,7 +34,7 @@ def cst_split_output_by_source(targetfile, idfile='', reduce_particle_id=True):
     print('Split files will be located in ' + destination)
 
     for sourceID in sourceIDs:
-        temp = data[data["sourceID"]==sourceID].copy() #Copy content not reference
+        temp = data[data["sourceID"] == sourceID].copy() #Copy content not reference
         pidoffset = temp['particleID'].min()
         if reduce_particle_id:
             temp.loc[:,'particleID'] = temp['particleID'] - pidoffset
@@ -65,7 +65,7 @@ def create_source_name_dictionary(idfile, sourceIDs): #optimise to allow for mis
             if(sourceID in iddata.index): #read known sources from file info
                 sourceDict[sourceID] = iddata.loc[sourceID, 'sourceName']
             else:
-                 sourceDict[sourceID] = "unknown"
+                sourceDict[sourceID] = "unknown"
         else:#or generate unknown
             sourceDict[sourceID] = "unknown"
 
