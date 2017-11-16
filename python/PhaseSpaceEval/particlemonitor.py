@@ -96,12 +96,12 @@ class ParticleMonitor:
         ps_v = (trajectory.interp_pos(t_c)-self.r0).dot(self.v)
 
         # Calculate longitudinal displacement
-        ps_l = -self.abs_vel(t_c-self.time0)
+        ps_l = -self.abs_vel*(t_c-self.time0)
 
         # Calculate up(i.e. x') and vp(i.e. y')
         uvw_mom = trajectory.interp_mom(t_c).dot(self.rotmat)
-        ps_up = 1000*np.arctan(uvw_mom[1]/uvw_mom[3])
-        ps_vp = 1000*np.arctan(uvw_mom[2]/uvw_mom[3])
+        ps_up = 1000*np.arctan(uvw_mom[0]/uvw_mom[2])
+        ps_vp = 1000*np.arctan(uvw_mom[1]/uvw_mom[2])
 
         # momentum spread
         ps_delta = (np.linalg.norm(uvw_mom)-self.abs_mom)/self.abs_mom
