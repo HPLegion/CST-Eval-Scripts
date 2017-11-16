@@ -40,7 +40,7 @@ parfor k = 1:n
             ppval(ps_splines.p_npy_s{k}, T0),...
             ppval(ps_splines.p_npz_s{k}, T0)];
         np_tr = np*dtr_rot;
-        
+        warning('might be wrong momentum!!!!! t0 <-> t_cross')
         % Compute transverse deflection and momentum spread
         ts_xprime(k) = 1000*atan(np_tr(1)/np_tr(3));
         ts_yprime(k) = 1000*atan(np_tr(2)/np_tr(3));
