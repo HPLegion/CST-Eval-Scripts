@@ -11,6 +11,14 @@ class Trajectory:
     https://docs.scipy.org/doc/scipy-0.19.1/reference/generated/scipy.interpolate.interp1d.html
     """
     def __init__(self, trajectory_frame, constants_frame, interpolation_type="linear"):
+        """
+        Initialised the Trajectory Object
+        
+        Keyword Arguments:
+        trajectory_frame -- a data frame containing the trajectory information
+        constants_frame -- a single line data frame containing the static information
+        interpolation_type -- default="linear", the interpolation method to be used (for scipy interp1d)
+        """
         self.__trajectory_frame = trajectory_frame#.copy()
         self.__constants_frame = constants_frame#.copy()
 
