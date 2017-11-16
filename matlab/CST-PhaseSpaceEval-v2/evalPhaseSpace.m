@@ -74,7 +74,7 @@ if dtr_p0>0 %if momentum >0 use this to calculate u,v,w
     
     %Calculate u
     u = w; %start at w
-    u = u*[0,0,-1;0,1,0;1,0,0]; %rotate about y axis by -90deg
+    u = u*[0,0,-1;0,1,0;1,0,0]; %rotate about y axis by +90deg
     u(2) = 0; %project onto x,z plane
     u = u/norm(u);% Normalise u
     
