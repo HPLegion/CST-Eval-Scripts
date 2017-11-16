@@ -26,6 +26,7 @@ def import_particle_constants(filename):
     constants = pd.read_csv(filename, sep=DELIMITER, names=col_names, header=0, index_col=0)
     # Drop Last Row (EOF)
     constants.drop(constants.tail(1).index,inplace=True)
+    constants.index = pd.to_numeric(constants.index)
     return constants
 
 
