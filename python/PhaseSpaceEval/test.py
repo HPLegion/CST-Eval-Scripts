@@ -37,7 +37,8 @@ print(tr.interp_pos(10))
 print(tr.interp_abs_vel(10))
 print(tr.tmin, tr.tmax)
 
-pm = ParticleMonitor(300, trajectory=tr)
+pm = ParticleMonitor(302, trajectory=tr)
 
-res = pm.find_intersect(tr2)
-print(res)
+print(pm.find_intersect(tr))
+print(pm.r0)
+print(pm.find_intersect(tr2))
