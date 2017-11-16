@@ -31,10 +31,13 @@ particle_trajectories = ipd.import_particle_trajectories(trajectoriesFile)
 # print(particle_trajectories[0])
 
 tr = Trajectory(particle_trajectories[0],particle_constants.loc[[0]])
+tr2 = Trajectory(particle_trajectories[1],particle_constants.loc[[1]])
 
 print(tr.interp_pos(10))
 print(tr.interp_abs_vel(10))
 print(tr.tmin, tr.tmax)
 
 pm = ParticleMonitor(300, trajectory=tr)
-print()
+
+res = pm.find_intersect(tr2)
+print(res)
