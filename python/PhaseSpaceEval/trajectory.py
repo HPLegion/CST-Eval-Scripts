@@ -118,3 +118,12 @@ class Trajectory:
         assert not isinstance(time, (list, tuple, np.ndarray)), "time mus be a scalar"
         mom_abs = np.linalg.norm(self.interp_mom(time))
         return mom_abs * 299792458 * 1.0E3 / 1.0E9 / np.sqrt(1 + mom_abs**2)
+
+    def interp_abs_mom(self, time):
+        """
+        Returns an interpolation of the absolute momentum at given time (in mm/ns)
+        Only use scalars for time here!
+        """
+        assert not isinstance(time, (list, tuple, np.ndarray)), "time mus be a scalar"
+        return np.linalg.norm(self.interp_mom(time))
+        
