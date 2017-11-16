@@ -3,6 +3,7 @@ Contains a class that represents a particle monitor
 """
 import numpy as np
 from scipy import interpolate
+from scipy import optimize
 
 class ParticleMonitor:
     """
@@ -11,7 +12,8 @@ class ParticleMonitor:
 
     def __init__(self, time0, trajectory=None,
                  r0=np.array([0, 0, 0]), u=np.array([0, 0, 0]),
-                 v=np.array([0, 0, 0]), w=np.array([0, 0, 0]), abs_vel=0):
+                 v=np.array([0, 0, 0]), w=np.array([0, 0, 0]),
+                 abs_vel=0, abs_mom=0):
         """
         Initialiser for the ParticleMonitor Object
         can either manually define the required parameters or hand over a trajectory from which they will be computed
@@ -33,12 +35,14 @@ class ParticleMonitor:
             self.u = u.copy()
             self.v = v.copy()
             self.w = w.copy()
-            self.vel = abs_vel
+            self.abs_vel = abs_vel
+            self.abs_mom = abs_mom
         # Else compute r0, u,v,w and abs_vel from trajectory
         else:
             assert trajectory.tmin <= time0 <= trajectory.tmax, "Time out of bounds"
             self.r0 = trajectory.interp_pos(self.time0)
-            self.vel = trajectory.interp_abs_vel(self.time0)
+            self.abs_vel = trajectory.interp_abs_vel(self.time0)
+            self.abs_mom = trajectory.interp_abs_mom(self.time0)
             self.__compute_uvw(trajectory)
         # Compose Rotation Matrix for x,y,z to u,v,w
         self.rotmat = np.linalg.inv(np.array([self.u, self.v, self.w]))
@@ -61,3 +65,47 @@ class ParticleMonitor:
         self.u = u
         self.v = v
         self.w = w
+
+
+    def find_intersect(self, trajectory, lb=None, ub=None):
+        """
+        finds the intersection of trajectory with this monitor
+        """
+
+        if lb == None:
+            lb = trajectory.tmin
+        else:
+            lb = np.maximum(trajectory.tmin,lb)
+        if ub == None:
+            ub = trajectory.tmax
+        else:
+            ub = np.minimum(trajectory.tmin,lb)
+        
+        # dot product of vector difference (traj_pos - monitor_pos) with w
+        def f(t):
+            return (trajectory.interp_pos(t)-self.r0).dot(self.w)
+        # find root of f to find intersection
+        (t_c, s_info) = optimize.brenth(f,lb,ub,full_output = True)
+        
+        # if no solution was found,i.e. the particle does not reach the monitor
+        if not s_info.converged:
+            return -1
+        
+        # Calculate u(i.e. x) and v(i.e. y) component of intersection in the monitor coordinates
+        ps_u = (trajectory.interp_pos(t_c)-self.r0).dot(self.u)
+        ps_v = (trajectory.interp_pos(t_c)-self.r0).dot(self.v)
+
+        # Calculate longitudinal displacement
+        ps_l = -self.abs_vel(t_c-self.time0)
+
+        # Calculate up(i.e. x') and vp(i.e. y')
+        uvw_mom = trajectory.interp_mom(t_c).dot(self.rotmat)
+        ps_up = 1000*np.arctan(uvw_mom[1]/uvw_mom[3])
+        ps_vp = 1000*np.arctan(uvw_mom[2]/uvw_mom[3])
+
+        # momentum spread
+        ps_delta = (np.linalg.norm(uvw_mom)-self.abs_mom)/self.abs_mom
+
+        inters_data = [trajectory.particleID, trajectory.sourceID, t_c,
+                       ps_u, ps_up, ps_v, ps_vp, ps_l, ps_delta]
+        return inters_data
