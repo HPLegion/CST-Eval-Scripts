@@ -109,3 +109,16 @@ class ParticleMonitor:
         inters_data = [trajectory.particleID, trajectory.sourceID, t_c,
                        ps_u, ps_up, ps_v, ps_vp, ps_l, ps_delta]
         return inters_data
+
+    
+    def store_intersect(self, trajectory, lb=None, ub=None):
+        """
+        finds the intersection of trajectory with this monitor and stores the event in a dataframe that can be accessed with
+        get_events, the return value of find_intersect is returned as well
+        """
+
+        result = self.find_intersect(trajectory, lb=None, ub=None)
+
+        #TOBEIMPLEMENTED
+
+        return result
