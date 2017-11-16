@@ -1,6 +1,6 @@
 %% Set Up
-filepath = 'M:\ANALYSIS\v4s-emittance-offset-xy\';
-filename = 'test.txt';
+filepath = 'M:\cst_trajectory_sampling_test\';
+filename = 'angular0.txt';
 % des_filename = 'centraltrajectory_intf.txt';
 dtr_id = 0; %id of particle following design trajectory (dtr)
 % SID =0;
