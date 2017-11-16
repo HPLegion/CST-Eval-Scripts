@@ -27,6 +27,7 @@ def import_particle_constants(filename):
     # Drop Last Row (EOF)
     constants.drop(constants.tail(1).index,inplace=True)
     constants.index = pd.to_numeric(constants.index)
+    constants["sourceID"] = pd.to_numeric(constants["sourceID"], downcast='integer')
     return constants
 
 
