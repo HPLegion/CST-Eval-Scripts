@@ -125,4 +125,4 @@ class Trajectory:
         Only use scalars for time here!
         """
         assert not isinstance(time, (list, tuple, np.ndarray)), "time mus be a scalar"
-        return np.linalg.norm(self.interp_mom(time))     
+        return np.linalg.norm(self.interp_mom(time))
