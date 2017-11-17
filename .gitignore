@@ -3,3 +3,5 @@
 python/.vscode/
 python/PhaseSpaceEval/__pycache__/
 python/PhaseSpaceEval/data2/
+python/PhaseSpaceEval/data3/
+python/PhaseSpaceEval/.ipynb_checkpoints/
