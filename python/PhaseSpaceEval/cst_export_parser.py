@@ -5,11 +5,12 @@ Module that helps with parsind CST files into a more efficent and simpler format
 import os.path
 DELIMITER = ";"
 
-def split_output_file(input_file):
+def split_output_file(input_file, tmin=None, tmax=None):
     """
     Splits a CST ASCII Output File (PICStyle) into one part containing the costant particle
     properties and one part containing the trajectories. The files are located in the same folder
     as the input file.
+    If tmin and tmax are given only timesteps with these boundaries will be saved into the output
     """
     filepath = os.path.dirname(input_file)
     filename = os.path.basename(input_file)
@@ -41,8 +42,10 @@ def split_output_file(input_file):
             data = line.split()
 
             # Save trajectory info
-            tr_ls = [data[10], data[9], data[0], data[1], data[2], data[3], data[4], data[5]]
-            out_tr.write(DELIMITER.join(tr_ls) + "\n")
+            if ((tmin is None or float(data[9]) >= tmin) and
+                    (tmax is None or float(data[9]) <= tmax)):
+                tr_ls = [data[10], data[9], data[0], data[1], data[2], data[3], data[4], data[5]]
+                out_tr.write(DELIMITER.join(tr_ls) + "\n")
 
             # If reached new particle, update constants
             if data[10] != last_particleID:
