@@ -31,7 +31,7 @@ def import_particle_constants(filename):
     return constants
 
 
-def import_particle_trajectories(filename):
+def import_particle_trajectories(filename, verbose=False):
     """
     Imports the particle trajectory data
     Returns a dictionary of pandas dataframes where the key is the particleID
@@ -40,6 +40,7 @@ def import_particle_trajectories(filename):
 
     Keyword arguments:
     filename -- path of the file to be imported
+    verbose -- Boolean Flag, print import status
     """
 
     def datablock_to_df(datablock):
@@ -76,7 +77,8 @@ def import_particle_trajectories(filename):
         prior_first_block = line.split(DELIMITER)[0]
         # Save second line (i.e. first line of data)
         data.append(line)
-        print("Imported particle trajectory:")
+        if verbose:
+            print("Imported particle trajectory:")
         for line in f: # Crawl through rest of the file
             
             # If particleID on current line is same as before
@@ -85,14 +87,16 @@ def import_particle_trajectories(filename):
                 (pID, df) = datablock_to_df(data)
                 frames.update({pID:df})
                 # Print status
-                print(str(pID),end=", ")
-                if pID % 20 == 0:
-                    print()
+                if verbose:
+                    print(str(pID),end=", ")
+                    if pID % 20 == 0:
+                        print()
                 
                 #break if end of file
                 if line == "EOF":
-                    print()
-                    print("Reached EOF")
+                    if verbose:
+                        print()
+                        print("Reached EOF")
                     break
             
                 # Clear the buffered data
