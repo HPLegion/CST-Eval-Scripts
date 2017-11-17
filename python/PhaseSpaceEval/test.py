@@ -1,4 +1,4 @@
-import import_particle_data as ipd
+import import_particle_data as i_p_d
 import os
 import pandas as pd
 from trajectory import Trajectory
@@ -6,19 +6,20 @@ import numpy as np
 from scipy import interpolate
 from particlemonitor import ParticleMonitor
 import cst_export_parser
+from emittance import emittance
+# data_path = os.path.dirname(os.path.realpath(__file__)) + "\\data\\"
 
-data_path = os.path.dirname(os.path.realpath(__file__)) + "\\data\\"
+# data3_path = os.path.dirname(os.path.realpath(__file__)) + "\\data3\\"
+# testFile = data3_path + "step sample.txt"
+# cst_export_parser.split_output_file(testFile, tmin=290, tmax=293)
 
-data3_path = os.path.dirname(os.path.realpath(__file__)) + "\\data3\\"
-testFile = data3_path + "step sample.txt"
-cst_export_parser.split_output_file(testFile)
-
+print(emittance(np.array([1,0,-1]), np.array([-1,0,1])))
 # # sourceIDFile = data_path + "source_names.txt"
-# # names = ipd.import_source_names(sourceIDFile)
+# # names = i_p_d.import_source_names(sourceIDFile)
 # # print(names)
 
 # constantsFile = data_path + "particle_constants.txt"
-# particle_constants = ipd.import_particle_constants(constantsFile)
+# particle_constants = i_p_d.import_particle_constants(constantsFile)
 # # print(particle_constants)
 # # print(particle_constants.dtypes)
 # # print(particle_constants.index.dtype)
@@ -31,7 +32,7 @@ cst_export_parser.split_output_file(testFile)
 
 
 # trajectoriesFile = data_path + "particle_trajectories.txt"
-# particle_trajectories = ipd.import_particle_trajectories(trajectoriesFile)
+# particle_trajectories = i_p_d.import_particle_trajectories(trajectoriesFile)
 # # print(particle_trajectories[16].dtypes)
 # # print(particle_trajectories[0])
 
