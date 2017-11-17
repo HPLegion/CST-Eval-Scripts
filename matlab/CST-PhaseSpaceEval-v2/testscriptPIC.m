@@ -1,6 +1,6 @@
 %% Set Up
 filepath = 'M:\cst_trajectory_sampling_test\';
-filename = 'angular0.txt';
+filename = 'step_sample_pp.txt';
 % des_filename = 'centraltrajectory_intf.txt';
 dtr_id = 0; %id of particle following design trajectory (dtr)
 % SID =0;
