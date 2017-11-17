@@ -122,7 +122,7 @@ class ParticleMonitor:
         """
 
         result = self.find_intersect(trajectory, lb, ub)
-        # Increase miss counter if no interaction founc (result = -1)
+        # Increase miss counter if no intersection (result = -1)
         if result == -1:
             self.__misses += 1
         # ELSE: Append the list of results to the event list containg all result lists
