@@ -59,9 +59,7 @@ def import_particle_trajectories(filename, verbose=False):
         # Use pandas read csv to read the data stream and prepare a frame
         df = pd.read_csv(datastream, sep=DELIMITER, names=col_names, usecols=col_names[1:],
                          header=None, index_col=None)
-        df.x.values *= 1000 # Convert to mm
-        df.y.values *= 1000
-        df.z.values *= 1000
+        df.loc(:,['x', 'y', 'z']) *= 1000 # Convert to mm
         pID = int(datablock[0].split(DELIMITER)[0])
         return (pID,df)
 
