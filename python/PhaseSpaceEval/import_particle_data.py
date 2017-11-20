@@ -12,7 +12,7 @@ def import_particle_constants(filename):
     """
     Imports the time invariant particle properties
     Returns pandas dataframe with columns
-    [particleID, mass, macroCharge, sourceID]
+    [particleID, mass, macroCharge, sourceID] in (ul, kg, C, ul)
     particleID is index_col of dataframe
 
     Keyword arguments:
@@ -36,7 +36,7 @@ def import_particle_trajectories(filename, verbose=False):
     Imports the particle trajectory data
     Returns a dictionary of pandas dataframes where the key is the particleID
     I.e. the dict contains one dataframe per particleID where each frame has the shape below
-    [time, x, y, x, px, py, pz]
+    [time, x, y, z, px, py, pz] in (ns, mm, mm, mm, ul, ul, ul)
 
     Keyword arguments:
     filename -- path of the file to be imported
@@ -59,6 +59,9 @@ def import_particle_trajectories(filename, verbose=False):
         # Use pandas read csv to read the data stream and prepare a frame
         df = pd.read_csv(datastream, sep=DELIMITER, names=col_names, usecols=col_names[1:],
                          header=None, index_col=None)
+        df.x.values *= 1000 # Convert to mm
+        df.y.values *= 1000
+        df.z.values *= 1000
         pID = int(datablock[0].split(DELIMITER)[0])
         return (pID,df)
 
