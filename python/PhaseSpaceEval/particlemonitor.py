@@ -31,6 +31,7 @@ class ParticleMonitor:
         self.time0 = time0
         #Create empty list for events to be saved in
         self.__events = list()
+        self.__misses = 0
         # If no trajectory is given use defaults or manual user input
         if trajectory == None:
             self.r0 = r0.copy()
@@ -121,8 +122,12 @@ class ParticleMonitor:
         """
 
         result = self.find_intersect(trajectory, lb, ub)
-        # Appends the list of results to the event list containg all result lists
-        self.__events.append(result.copy())
+        # Increase miss counter if no intersection (result = -1)
+        if result == -1:
+            self.__misses += 1
+        # ELSE: Append the list of results to the event list containg all result lists
+        else:
+            self.__events.append(result.copy())
         return result
 
     def get_events(self):
@@ -132,3 +137,9 @@ class ParticleMonitor:
         colnames = ["particleID", "sourceID", "t_event",
                     "ps_u", "ps_up", "ps_v", "ps_vp", "ps_l", "ps_delta"]
         return DataFrame(self.__events, columns=colnames)
+
+    def get_misses(self):
+        """
+        Returns the number of events where the trajectory did not hit the monitor
+        """
+        return self.__misses
