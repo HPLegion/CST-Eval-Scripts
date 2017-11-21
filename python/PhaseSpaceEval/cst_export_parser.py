@@ -14,7 +14,7 @@ def split_output_file(input_file, tmin=None, tmax=None):
     """
     filepath = os.path.dirname(input_file)
     filename = os.path.basename(input_file)
-	filename = os.path.splitext(filename)[0]
+    filename = os.path.splitext(filename)[0]
 
     trajectory_header = "% particleID;Time;x;y;z;px(normed);py(normed);pz(normed)"
     constants_header = "% particleID;mass(kg);macroCharge(C);sourceID"
